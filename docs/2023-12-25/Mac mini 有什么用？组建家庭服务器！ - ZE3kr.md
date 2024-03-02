@@ -1,0 +1,179 @@
+---
+id: 7e650d83-d81e-4435-aa7e-73046a7bccbd
+---
+
+# Mac mini 有什么用？组建家庭服务器！ | ZE3kr
+#Omnivore
+
+[Read on Omnivore](https://omnivore.app/me/mac-mini-ze-3-kr-18c9f1cf00d)
+[Read Original](https://www.guozeyu.com/2021/11/mac-mini/)
+
+最近我从闲鱼上购入了一个二手 Mac mini，2020 年 M1 版。我选择的是配有 8GB 内存和 256GB 存储空间的最低配置，当时大约花了 CN¥3,600 左右。目前已经使用有一个月左右，用它组建了旁路由、远程时间机器（Time Machine）备份、SMB 文件共享、远程桌面连接、内网穿透等功能，可以说是物超所值了。
+
+## [](#谈谈-2020-M1-Mac-mini-的配置 "谈谈 2020 M1 Mac mini 的配置")谈谈 2020 M1 Mac mini 的配置
+
+Mac mini 是苹果的小主机，类似 Intel® NUC 这种迷你 PC。它不配备键盘、鼠标、显示器，因此相比 iMac 也更加实惠。
+
+这一代 Mac mini 是首款搭载 Apple Silicon 的 Mac mini，基于 ARM 架构的它拥有更优秀的能耗比以及更好的性能。它的 Geekbench 4 跑分为 7422，高于基于 Intel 芯片的最高配 Mac mini 的 5488 分。不过，受 M1 芯片限制，它只有两个雷电 3 接口，而不是 4 个，而且它只支持连接最多两个显示器。不过，相比搭载 M1 芯片的 MacBook Air 和 MacBook Pro，它的接口要更丰富——它额外有一个 HDMI 2.0、千兆网口（可升级到 10Gb 网口）和两个 USB-A 接口。
+
+个人认为 Mac mini 的定位大于等于 MacBook Air，小于等于 iMac、MacBook Pro 系列。所以在未来，苹果也有可能推出搭载 M1 Pro/M1 Max 芯片的 Mac mini。
+
+## [](#作为服务器需要修改的一些设置 "作为服务器需要修改的一些设置")作为服务器需要修改的一些设置
+
+### [](#自动登录 "自动登录")自动登录
+
+自动登录是非常重要的一个功能。启用自动登录可以实现在更新 macOS、重启电脑后，不需要输入密码即可自动登录到用户界面，并启动相关的服务。可以说是将 Mac mini 作为服务器，尤其是远程服务器所必须要打开的一个功能。具体的操作方式请参考[这个文档](https://support.apple.com/zh-cn/HT201476)。需要[停用文件保险箱](https://support.apple.com/zh-cn/HT204837)才可以启用这个功能。
+
+### [](#配置防火墙和路由器 "配置防火墙和路由器")配置防火墙和路由器
+
+macOS 的共享功能会监听所有的网络接口。如果你的运营商提供了公网 IPv4，则可以通过端口转发或者 DMZ 主机的方式将 SMB 暴露在公网即可。如果需要 IPv6 访问，则需要关闭光猫以及路由器上的防火墙，允许外部传入的 IPv6 连接。
+
+### [](#远程登录和远程管理 "远程登录和远程管理")远程登录和远程管理
+
+开启远程登录和远程管理不仅可以方便的远程管理 Mac mini，还可以直接使用 macOS 环境去执行应用程序。开启远程登录后可以使用 SSH 连接。开启远程管理后可以进行远程屏幕连接。
+
+![远程登录配置截图](https://proxy-prod.omnivore-image-cache.app/1336x1088,s3TpSiNZQCRg2pE4XucbanqovVqZQjoENz4HVACyCdCE/https://cdn.tloxygen.net/6T-behmofKYLsxlrK0l_MQ/9e804015-8139-4c8e-886f-e95928efa301/extra)
+
+远程登录配置截图
+
+在 macOS/iOS 上，我使用 Screens 去远程连接 Mac mini。如果你在 iPad 上使用，我推荐安装 SwitchResX 来自定义屏幕分辨率，实现完美适配 iPad 的效果。需要注意的是，iPad 底部可能会留有部分安全距离，这在设置分辨率时需要减去。在我的 11-inch iPad Pro 上，底部有 40 像素的安全距离。除了分辨率之外，我还将刷新率降低到了 30Hz，以减少网络传输上的压力。
+
+![远程屏幕连接完美适配 iPad](https://proxy-prod.omnivore-image-cache.app/2388x1668,srGqSZy8TYlV_jRILNVfMbqbLpp-roAUC8AkJQoFttsg/https://cdn.tloxygen.net/6T-behmofKYLsxlrK0l_MQ/a89c571f-dbe4-46aa-b395-53ec4843f201/extra)
+
+远程屏幕连接完美适配 iPad
+
+需要注意的是，开启远程登录和远程管理前，一定要为你的 Mac 设置强密码，否则极有可能密码被暴力破解。
+
+通过远程连接，甚至可以在 iPad 上使用 Final Cut Pro。经过本人实际体验，在同城市通过互联网连接操控时，感觉不到明显卡顿，完全可用。需要注意的是，使用 Final Cut Pro 时屏幕宽度必须大于 1280px（HiDPI 时为 2560 个像素点）。可以使用 SwitchResX 根据应用程序自动切换分辨率。下面这张截图是在 11-inch iPad Pro 上缩放显示的，因此有些许模糊。
+
+![在 iPad 上使用 Final Cut Pro（通过远程连接）](https://proxy-prod.omnivore-image-cache.app/2388x1668,sCMVHbge4Nst5kNw-u6zo8oqZos66mXBbw0xcPlSDsWQ/https://cdn.tloxygen.net/6T-behmofKYLsxlrK0l_MQ/83a2ed0c-ff87-42fa-948e-a9a7a83fa301/extra)
+
+在 iPad 上使用 Final Cut Pro（通过远程连接）
+
+macOS 的文件共享功能可以直接将 Mac mini 变成一个 NAS。只需要打开系统偏好设置——共享，然后启用 “文件共享”，就可以实现 NAS 了。Mac 使用的是 SMB 协议。建议使用有线网络以确保稳定性。
+
+![启用 “文件共享”](https://proxy-prod.omnivore-image-cache.app/1336x1088,sLp-iFEU8zFHlm5bYstZjjcEmd6LFBLYtaI08HHE7ja8/https://cdn.tloxygen.net/6T-behmofKYLsxlrK0l_MQ/6b1fd202-3240-4a80-8157-b36c96815c01/extra)
+
+启用 “文件共享”
+
+注意，你可能需要进入高级选项，然后启用 “Windows 文件共享”，才能在某些客户端上连接 SMB。
+
+![启用 “Windows 文件共享”](https://proxy-prod.omnivore-image-cache.app/1336x1088,sjcohB4myNS5cpcOAOyyc_4JXtPA5hWVDyjzL3d5zIK0/https://cdn.tloxygen.net/6T-behmofKYLsxlrK0l_MQ/6a109bfe-64d2-4e81-c768-9545a9c84801/extra)
+
+启用 “Windows 文件共享”
+
+如果你想允许访客访问，你不仅需要在用户里添加 “任何人”，还需要在高级选项里打开 “允许客人用户”。此外，还需要在系统偏好设置——用户与群组——客人用户中启用 “允许客人用户连接到共享文件夹”。这时候，可以以用户名 “Guest”，密码空的方式连接 SMB。
+
+![高级选项](https://proxy-prod.omnivore-image-cache.app/638x368,sh40DaXE6bHcsLlRESKmfttp1Du-dqxtC70FLF747UxA/https://cdn.tloxygen.net/6T-behmofKYLsxlrK0l_MQ/f04adbdd-2a9d-4a6f-df97-60a08345f101/extra)
+
+高级选项
+
+![打开 “允许客人用户”](https://proxy-prod.omnivore-image-cache.app/910x380,sGExajIdjM70dv2J7JNYRATfcBqfGoKG2KWnfoWDuW3Y/https://cdn.tloxygen.net/6T-behmofKYLsxlrK0l_MQ/96b7a09b-77f1-4b0c-d55a-32b45fe1d401/extra)
+
+打开 “允许客人用户”
+
+![启用 “允许客人用户连接到共享文件夹”](https://proxy-prod.omnivore-image-cache.app/1336x1000,s6JGfX52LDmsOTNglImuW-9PdUQEb9w3FpTXzOX4p--I/https://cdn.tloxygen.net/6T-behmofKYLsxlrK0l_MQ/4fa2cbd7-f413-4b0d-57a5-0e94720ce901/extra)
+
+启用 “允许客人用户连接到共享文件夹”
+
+### [](#共享外部硬盘 "共享外部硬盘")共享外部硬盘
+
+Mac mini 的雷电 3 和 USB Type-A 接口很适合用于连接外部硬盘，连接的外部硬盘也可以通过文件共享去分享，只需要在添加外部硬盘到 “共享文件夹” 中即可。
+
+#### [](#组建-RAID-和-Fusion-Drive "组建 RAID 和 Fusion Drive")组建 RAID 和 Fusion Drive
+
+我为我的外部硬盘配置了 RAID 和 Fusion Drive。我使用了 4 个 3TB 3.5 英寸 HDD 和一个 1TB SSD。其中 4 个 HDD 是通过四盘位硬盘盒的方式使用 USB Type-A 口连接到 Mac mini，SSD 使用雷电 3/USB 4 硬盘盒连接到 Mac mini。我在硬盘盒上做了 RAID5，将 4 个 3TB HDD 变成了 9TB 的存储空间。然后在此之上又使用 Fusion Drive 将其与 SSD 融合，最终达到了 10TB 的容量。Fusion Drive 配置方法我参考的是[这篇文章](https://www.econtechnologies.com/chronosync/tn-cs-apfs-fusion-drive.html)。
+
+我选择使用 APFS 作为文件系统。主要是因为新版本 macOS 已经不支持新建 HFS+ 加密分区，而且由于有 SSD 的加持，并不是很担心性能下降。
+
+### [](#作为时间机器（Time-Machine）备份目的位置 "作为时间机器（Time Machine）备份目的位置")作为时间机器（Time Machine）备份目的位置
+
+同样是在高级选项中，打开 “共享为时间机器备份目的位置” 即可。在需要进行备份的 Mac 上，使用访达（Finder）菜单栏中的前往——连接服务器（⌘K）连接到这台 Mac，然后就可以在系统偏好设置中的 “时间机器” 里找到通过文件共享的文件夹了。
+
+![连接服务器](https://proxy-prod.omnivore-image-cache.app/972x462,sbuckei7f0HT4Yy7pZHex7bEapvghDVaU_cwOlqVm9ss/https://cdn.tloxygen.net/6T-behmofKYLsxlrK0l_MQ/0b9c5ced-41dd-45ae-2687-318f040f8401/extra)
+
+连接服务器
+
+我目前是通过 Internet 的方式连接到 Mac mini 实现异地备份的，首次备份花了大约 6 小时，之后每次备份都能在半小时内完成。我还添加了一个通过 USB 连接的 HDD，系统会使用两个磁盘轮流备份，成功实现了一个异地备份、三个存储介质和三份拷贝，符合[备份 3-2-1 原则](https://www.guozeyu.com/2018/08/backup/#%E6%9C%80%E4%BD%B3%E5%A4%87%E4%BB%BD%E5%8E%9F%E5%88%99%EF%BC%9A321-%E5%8E%9F%E5%88%99)。
+
+![时间机器设置](https://proxy-prod.omnivore-image-cache.app/1336x912,sFMMJEqfSijWG6xmJ5nQl9nX7mSm9dOzwFdOJffEbewM/https://cdn.tloxygen.net/6T-behmofKYLsxlrK0l_MQ/d89b28f7-027d-4166-598d-8231c344e701/extra)
+
+时间机器设置
+
+### [](#对-NAS-上的数据进行备份 "对 NAS 上的数据进行备份")对 NAS 上的数据进行备份
+
+为了更好的安全性，还可以对 NAS 上的数据进行备份。我选择使用 Mac mini 上安装的 Carbon Copy Cloner，将 NAS 上部分重要数据再次备份到本地局域网的 AirPort Time Capsule 上。我选择备份到 APFS 文件系统的 Sparse Bundle 上以实现快照和加密。
+
+![Carbon Copy Cloner 的配置](https://proxy-prod.omnivore-image-cache.app/2002x1024,sX7oEVap7csYZshgKM62MujDE3ugh5IshcATT7O1qwSU/https://cdn.tloxygen.net/6T-behmofKYLsxlrK0l_MQ/91eaf553-9b72-470b-30ee-4ffd3b8dfc01/extra)
+
+Carbon Copy Cloner 的配置
+
+### [](#同步照片——Lightroom-Classic-CC "同步照片——Lightroom Classic CC")同步照片——Lightroom Classic CC
+
+由于有了这个 10TB 的 NAS，我果断将我的 Adobe 订阅从 Lightroom (1TB) 换到了 Photography (20GB)。Photography (20GB) 相比 Lightroom (1TB) 多了 Photoshop CC 和 Lightroom Classic CC。其中 Lightroom Classic CC 使用的是本地的照片库，同时还可以与 Lightroom CC 进行同步。我在 Mac mini 上安装了 Lightroom Classic CC，并打开了同步功能，将之前所有的 Lightroom CC 图片均存储在了本地，然后在 Lightroom Classic CC 上对这些图片取消同步。很快，我的云空间就全部释放了。然后，我再将这些照片重新添加到同步文件夹中。此时，Lightroom Classic CC 只会上传这些照片的智能预览（就是相对低分辨率的 RAW 格式），这些照片不占用云端存储空间。以后，当 Lightroom CC 的空间再次不足时，我依然可以使用这个方法释放 Lightroom CC 的空间。
+
+![不占用云空间的同步](https://proxy-prod.omnivore-image-cache.app/1169x534,su1BcMViqwdurL88JQ_AzIO2uQIEKr84lqsN3hLPL_74/https://cdn.tloxygen.net/6T-behmofKYLsxlrK0l_MQ/bea3157d-2cb7-47c1-a801-4b96b95f8801/extra)
+
+不占用云空间的同步
+
+现在，我可以在我的任何安装了 Lightroom CC 的设备上对照片进行编辑。不过，如果需要导出原图，则仍需要在 Mac mini 上的 Lightroom Classic CC 操作。为了能够在其他桌面设备上导出原图，我需要在其他设备上拥有——1\. 原图文件、2\. 资料库。我选择使用 ChronoSync Express 对原图文件进行双向定时同步，使用 iCloud 云盘同步资料库（包括标准预览、1:1预览、智能预览）。经过我实际测试，发现 iCloud 是支持增量同步的，即每次修改资料库后只会同步资料库文件中改动的文件块。
+
+需要注意的是，`Lightroom Catalog*` 文件必须在同一个目录下。如有必要，可以使用软链接的方式实现在不同位置存储它们的原始文件。我一般会将原始文件存储在外置硬盘中，这样可以节省本机空间。当外置硬盘不可用时，依然可以使用智能预览进行编辑。
+
+## [](#旁路由 "旁路由")旁路由
+
+我使用 Surge 这个软件的 DHCP 服务器实现旁路由。Surge 可以接管局域网设备上的请求，对其重写、抓包、解密、代理等，十分方便。需要关闭路由器/光猫上的 DHCP 服务器。
+
+![Surge 的 DHCP](https://proxy-prod.omnivore-image-cache.app/1920x1202,sdzqz8gy2ZCbzFISl1yPIzMrcZrW2UTyIPEngOCpFMDk/https://cdn.tloxygen.net/6T-behmofKYLsxlrK0l_MQ/0c7747cf-4177-4fce-324f-eb83d72ebd01/extra)
+
+Surge 的 DHCP
+
+打开 Surge 的增强模式，然后在 DHCP 页面中右键选择设备，然后开启 “使用 Surge 作为网关”。将那台设备重新连接到网络，其流量就会被 Surge 接管。
+
+## [](#内网穿透 "内网穿透")内网穿透
+
+同样是使用 Surge，在其配置文件中加入如下内容：
+
+```routeros
+[Snell Server]
+interface = ::
+port = 6160
+psk = SOME_RANDOM_PASSWORD
+obfs = off
+ipv6=true
+
+```
+
+然后，在其他设备上的 Surge 加入如下代理配置：
+
+```angelscript
+[Proxy]
+Mac mini = snell, mac-mini.sgddns, 6160, psk=SOME_RANDOM_PASSWORD, udp-relay=true, tfo=true
+
+[Rule]
+IP-CIDR, 192.168.1.0/24, Mac mini
+
+```
+
+需要更改 `SOME_RANDOM_PASSWORD` 为一段随机字符串，更改 `192.168.1.0/24` 为你的内网 IP 段。现在，就可以实现内网穿透了。
+
+## [](#下载器——qBittorrent "下载器——qBittorrent")下载器——qBittorrent
+
+我推荐使用 qBittorrent 作为下载器。其内置的 Web UI 可以方便的在其他设备上控制 qBittorrent.
+
+![配置 qBittorrent 的 Web UI](https://proxy-prod.omnivore-image-cache.app/1558x1238,siSl4OblVUBis71eCy6YnCOtjGBEhTb8it9s8guL4wN4/https://cdn.tloxygen.net/6T-behmofKYLsxlrK0l_MQ/179698ee-cbbe-475f-3f32-e6741cccca01/extra)
+
+配置 qBittorrent 的 Web UI
+
+![在其他设备上通过 Web UI 控制 qBittorrent](https://proxy-prod.omnivore-image-cache.app/1782x1158,s1RpkIcdTT8pu0Rj82EbAdKgm142gZ-5anav98A-S0MI/https://cdn.tloxygen.net/6T-behmofKYLsxlrK0l_MQ/31a86a64-f026-47b8-dd9b-9b5ed0f64c01/extra)
+
+在其他设备上通过 Web UI 控制 qBittorrent
+
+## [](#Mac-mini-的替代品 "Mac mini 的替代品")Mac mini 的替代品
+
+有些人可能觉得使用树莓派就行了。实际上，树莓派确实可以实现大多数功能，但是它却没有 macOS 环境，无法安装 Lightroom Classic CC、Final Cut Pro 等软件。
+
+当然也可以使用 Intel® NUC 等 Windows 主机来代替 Mac mini，可以实现类似的效果。
+
+---
+
