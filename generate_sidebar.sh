@@ -3,7 +3,10 @@
 #遍历所有 md 文件，生成 _sidebar.md
 echo "<!-- docs/_sidebar.md -->" > _sidebar.md
 
-for dir in docs/*/ ; do
+dirs=(docs/*/)
+dirs=("${dirs[@]%/}")  # 删除末尾的斜线
+dirs=($(echo "${dirs[@]}" | tr ' ' '\n' | sort -r))  # 反转数组，倒序
+for dir in "${dirs[@]}"; do
     echo "" >> _sidebar.md
 
     # echo "* ${dir%/}" >> _sidebar.md
